@@ -3,7 +3,7 @@ Takes FASTQ records from STDIN; cuts trailing lowercase sequence and the
 associated qualities, stashing them in the sequence id comment field as a
 SAM-style tag: QT:Z:[seq_cut]+[qal_cut]. Existing comments are dropped.
 Example usage:
-	cutadapt --action=lowercase ...|cutstash|bwa mem -C ...
+	cutadapt --action=lowercase ...|python cutstash.py|bwa mem -C ...
 """
 import sys
 
