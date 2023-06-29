@@ -7,16 +7,12 @@ Example usage:
 """
 import sys
 
-LC = {'a', 'c', 'g', 't'}
-
-def main():
-    cutstash(sys.stdin)
 
 def cutstash(fh):
     try:
-        while True:
+        for line in fh:
             # drop any existing comment
-            sid = next(fh).split()[0]
+            sid = line.rstrip().split()[0]
             seq = next(fh).rstrip()
             plus = next(fh).rstrip()
             qual = next(fh).rstrip()
@@ -24,7 +20,7 @@ def cutstash(fh):
             assert plus.startswith('+')
             # search backwards for efficiency
             pos = end = len(seq) - 1
-            while pos >= 0 and seq[pos] in LC:
+            while pos >= 0 and seq[pos].islower():
                 pos -= 1
             if pos < end:
                 seq, seq_trimmed = seq[:pos+1], seq[pos+1:].upper()
@@ -36,11 +32,14 @@ def cutstash(fh):
             sys.stdout.write(f'{seq}\n')
             sys.stdout.write(f'{plus}\n')
             sys.stdout.write(f'{qual}\n')
-    except StopIteration:
-        pass
+    except StopIteration as si:
+        sys.stderr.write(f'Unexpected end of FASTQ record at {sid}\n')
+        return 2
+    return 0
+
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:
         print(__doc__)
     else:
-        main()
+        sys.exit(cutstash(sys.stdin))
