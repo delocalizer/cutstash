@@ -1,6 +1,6 @@
 A very simple tool that takes FASTQ records from STDIN, cuts trailing lowercase sequence and the associated qualities, and stashes them in the sequence id comment field as a SAM-style tag:
 ```
-QT:Z:[seq_cut]+[qual_cut]
+ZT:Z:[seq_cut]+[qual_cut]
 ```
 Existing comments are dropped.
 

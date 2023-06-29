@@ -7,7 +7,7 @@ int main(int argc, char* argv[]) {
   if (argc > 1) {
     cout << "Takes FASTQ records from STDIN; cuts trailing lowercase sequence and the\n";
     cout << "associated qualities, stashing them in the sequence id comment field as a\n";
-    cout << "SAM-style tag: QT:Z:[seq_cut]+[qal_cut]. Existing comments are dropped.\n";
+    cout << "SAM-style tag: ZT:Z:[seq_cut]+[qal_cut]. Existing comments are dropped.\n";
     cout << "Example usage:\n";
     cout << "\tcutadapt --action=lowercase ...|cutstash|bwa mem -C ...\n";
     return 0;
@@ -37,7 +37,7 @@ int main(int argc, char* argv[]) {
        seq = seq.substr(0, pos+1);
        qal_cut = qal.substr(pos+1, string::npos);
        qal = qal.substr(0, pos+1);
-       sid = sid + " QT:Z:" + seq_cut + "+" + qal_cut;
+       sid = sid + " ZT:Z:" + seq_cut + "+" + qal_cut;
      } 
      cout << sid << "\n";
      cout << seq << "\n";
